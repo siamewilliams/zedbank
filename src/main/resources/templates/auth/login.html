@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Sign In · ZedBank</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+</head>
+<body>
+<div class="auth-shell">
+    <div class="auth-card">
+        <div class="brand"><i class="bi bi-bank2"></i> ZedBank</div>
+        <p class="text-center text-muted mb-4">Secure Internet Banking</p>
+
+        <div th:if="${error}" class="alert alert-danger py-2 small" th:text="${error}"></div>
+        <div th:if="${message}" class="alert alert-success py-2 small" th:text="${message}"></div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" required autofocus/>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required/>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-shield-lock"></i> Sign In
+            </button>
+        </form>
+
+        <hr class="my-4"/>
+        <p class="text-center text-muted small mb-0">
+            New customer? <a th:href="@{/register}" class="fw-semibold text-decoration-none">Open an account</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

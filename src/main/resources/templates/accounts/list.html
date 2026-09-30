@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head><title>Accounts</title></head>
+<body>
+<span layout:fragment="page-title">Accounts</span>
+
+<div layout:fragment="content">
+    <form method="get" th:action="@{/web/accounts}" class="row g-2 mb-3">
+        <div class="col-md-3">
+            <input type="number" name="customerId" class="form-control"
+                   placeholder="Customer ID" th:value="${customerId}"/>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary w-100">Search</button>
+        </div>
+        <div class="col-md-7 text-end">
+            <a th:href="@{/web/accounts/create}" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> New Account
+            </a>
+        </div>
+    </form>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <div th:if="${accounts == null or #lists.isEmpty(accounts)}" class="text-muted p-5 text-center">
+                Enter a Customer ID above to view accounts.
+            </div>
+            <table class="table" th:unless="${accounts == null or #lists.isEmpty(accounts)}">
+                <thead>
+                <tr>
+                    <th>Account #</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th class="text-end">Balance</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="a : ${accounts}">
+                    <td><code th:text="${a.accountNumber()}"></code></td>
+                    <td th:text="${a.customerName()}"></td>
+                    <td><span class="badge bg-secondary" th:text="${a.accountType()}"></span></td>
+                    <td><span class="badge bg-success" th:text="${a.status()}"></span></td>
+                    <td class="text-end fw-bold"
+                        th:text="${a.currency()} + ' ' + ${#numbers.formatDecimal(a.balance(), 1, 'COMMA', 2, 'POINT')}"></td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-secondary"
+                           th:href="@{'/web/accounts/' + ${a.accountNumber()}}">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

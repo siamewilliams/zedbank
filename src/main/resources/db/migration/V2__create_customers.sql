@@ -1,0 +1,14 @@
+CREATE TABLE customers (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_number VARCHAR(20) NOT NULL UNIQUE,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    phone VARCHAR(30) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    national_id VARCHAR(50) NOT NULL UNIQUE,
+    address VARCHAR(255) NOT NULL,
+    user_id BIGINT UNIQUE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);

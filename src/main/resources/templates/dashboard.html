@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/base}">
+<head><title>Dashboard</title></head>
+<body>
+<span layout:fragment="page-title">Dashboard</span>
+
+<div layout:fragment="content">
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div>
+                <div class="label">Accounts</div>
+                <div class="value" th:text="${accounts != null ? accounts.size() : 0}">0</div>
+            </div>
+            <div class="icon blue"><i class="bi bi-wallet2"></i></div>
+        </div>
+        <div class="stat-card">
+            <div>
+                <div class="label">Total Balance</div>
+                <div class="value" th:text="'ZMW ' + ${totalBalance != null ? totalBalance : '0.00'}">ZMW 0.00</div>
+            </div>
+            <div class="icon green"><i class="bi bi-cash-stack"></i></div>
+        </div>
+        <div class="stat-card">
+            <div>
+                <div class="label">Recent Activity</div>
+                <div class="value">—</div>
+            </div>
+            <div class="icon orange"><i class="bi bi-activity"></i></div>
+        </div>
+        <div class="stat-card" sec:authorize="hasAnyRole('ADMIN','TELLER')">
+            <div>
+                <div class="label">Role</div>
+                <div class="value" style="font-size: 1rem;" th:text="${role}">ROLE</div>
+            </div>
+            <div class="icon purple"><i class="bi bi-person-badge"></i></div>
+        </div>
+    </div>
+
+    <div class="card mb-4" sec:authorize="hasAnyRole('ADMIN','TELLER')">
+        <div class="card-header">
+            <span><i class="bi bi-lightning-charge me-2"></i>Quick Actions</span>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <a th:href="@{/web/accounts/create}" class="btn btn-outline-primary w-100 text-start">
+                        <i class="bi bi-plus-circle me-2"></i> Open Account
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a th:href="@{/web/transactions/deposit}" class="btn btn-outline-success w-100 text-start">
+                        <i class="bi bi-cash-coin me-2"></i> Deposit
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a th:href="@{/web/transactions/transfer}" class="btn btn-outline-warning w-100 text-start">
+                        <i class="bi bi-arrow-left-right me-2"></i> Transfer
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a th:href="@{/web/statements}" class="btn btn-outline-info w-100 text-start">
+                        <i class="bi bi-file-earmark-text me-2"></i> Statement
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" th:if="${accounts != null}">
+        <div class="card-header">
+            <span><i class="bi bi-wallet2 me-2"></i>Your Accounts</span>
+            <a th:href="@{/web/accounts(customerId=${customerId})}" class="btn btn-sm btn-outline-primary">View all</a>
+        </div>
+        <div class="card-body p-0">
+            <div th:if="${#lists.isEmpty(accounts)}" class="text-muted p-5 text-center">
+                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                No accounts yet.
+            </div>
+            <table class="table" th:unless="${#lists.isEmpty(accounts)}">
+                <thead>
+                <tr>
+                    <th>Account #</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th class="text-end">Balance</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="a : ${accounts}">
+                    <td><code th:text="${a.accountNumber()}"></code></td>
+                    <td><span class="badge bg-secondary" th:text="${a.accountType()}"></span></td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${a.status().name() == 'ACTIVE'} ? 'bg-success' : 'bg-warning'"
+                              th:text="${a.status()}"></span>
+                    </td>
+                    <td class="text-end fw-bold"
+                        th:text="${a.currency()} + ' ' + ${#numbers.formatDecimal(a.balance(), 1, 'COMMA', 2, 'POINT')}"></td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-secondary"
+                           th:href="@{'/web/accounts/' + ${a.accountNumber()}}">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

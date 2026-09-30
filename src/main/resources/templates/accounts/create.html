@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head><title>Open Account</title></head>
+<body>
+<span layout:fragment="page-title">Open New Account</span>
+
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body p-4">
+            <form th:action="@{/web/accounts/create}" th:object="${createAccountRequest}" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Customer ID</label>
+                    <input type="number" th:field="*{customerId}" class="form-control" required/>
+                    <div class="form-text">Internal customer ID</div>
+                    <div class="text-danger small" th:if="${#fields.hasErrors('customerId')}" th:errors="*{customerId}"></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Account Type</label>
+                    <select th:field="*{accountType}" class="form-select" required>
+                        <option value="">-- Select --</option>
+                        <option th:each="t : ${accountTypes}" th:value="${t}" th:text="${t}"></option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Currency</label>
+                    <input type="text" th:field="*{currency}" class="form-control" maxlength="3"/>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check2"></i> Create Account
+                </button>
+                <a th:href="@{/web/accounts}" class="btn btn-outline-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
