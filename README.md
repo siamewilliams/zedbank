@@ -23,16 +23,6 @@ A production-grade **core banking system** built with **Java 21, Spring Boot 3.3
 > | Account statement | Sidebar → Statements |
 > | Audit log | Sidebar → Audit Log (as admin) |
 
-Suggested folder structure: `docs/screenshots/`
-
-```markdown
-![Login](docs/screenshots/login.png)
-![Dashboard](docs/screenshots/dashboard.png)
-![Transfer](docs/screenshots/transfer.png)
-![Audit Log](docs/screenshots/audit-log.png)
-```
-
----
 
 ## ✨ Features
 
