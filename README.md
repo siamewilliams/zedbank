@@ -11,11 +11,9 @@ A production-grade **core banking system** built with **Java 21, Spring Boot 3.3
 
 ## 📸 Screenshots
 
-> **Add your screenshots here** — take these from your running app:
->
-> | Screen | What to capture |
-> |---|---|
+
 > | Login page | `http://localhost:8080/login` |
+> <img width="1897" height="947" alt="image" src="https://github.com/user-attachments/assets/d9b81d10-7cb4-47e1-9e39-6255d1fcd653" />
 > | Admin dashboard | After logging in as `admin` |
 > | Accounts list | Sidebar → Accounts |
 > | Transfer form | Sidebar → Transfer |
