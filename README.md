@@ -11,11 +11,10 @@ A production-grade **core banking system** built with **Java 21, Spring Boot 3.3
 
 ## 📸 Screenshots
 
-> **Add your screenshots here** — take these from your running app:
->
-> | Screen | What to capture |
-> |---|---|
+
+> 
 > | Login page | `http://localhost:8080/login` |
+![alt text](zed.1.png)
 > | Admin dashboard | After logging in as `admin` |
 ![alt text](image-1.png)
 > | Accounts list | Sidebar → Accounts |
